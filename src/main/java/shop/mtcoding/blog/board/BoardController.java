@@ -14,7 +14,7 @@ import java.util.List;
 public class BoardController {
     private final BoardNativeRepository boardNativeRepository;
 
-    @GetMapping( "/")
+    @GetMapping("/")
     public String index(HttpServletRequest request) {
 
         List<Board> boardList = boardNativeRepository.findAll();
@@ -29,12 +29,23 @@ public class BoardController {
     }
 
     @PostMapping("/board/save")
-    public String save(String username, String title, String content){
+    public String save(String username, String title, String content) {
         boardNativeRepository.save(title, content, username);
         return "redirect:/";
     }
+
     @GetMapping("/board/{id}")
-    public String detail(@PathVariable Integer id) {
+    public String detail(@PathVariable Integer id, HttpServletRequest request) {
+        Board board = boardNativeRepository.findById(id);
+        request.setAttribute("board", board);
+
         return "board/detail";
+    }
+
+    @PostMapping("/board/{id}/delete")
+    public String delete(@PathVariable Integer id) {
+        boardNativeRepository.deleteById(id);
+
+        return "redirect:/";
     }
 }
