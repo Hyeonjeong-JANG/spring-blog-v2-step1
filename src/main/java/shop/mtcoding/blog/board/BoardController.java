@@ -34,6 +34,23 @@ public class BoardController {
         return "redirect:/";
     }
 
+    @GetMapping("/board/{id}/update-form")
+    public String updateForm(@PathVariable Integer id, HttpServletRequest request) {
+        Board board = boardNativeRepository.findById(id);
+        request.setAttribute("board", board);
+
+        return "board/update-form";
+    }
+
+    @PostMapping("/board/{id}/update")
+    public String update(@PathVariable Integer id, String title, String content, String username) {
+        System.out.println(id);
+        boardNativeRepository.updateById(id, title, content, username);
+        System.out.println(id);
+//        return "redirect:board/" + id; // No static resource board/4/board/4. 나중에 고치기
+        return "redirect:/";
+    }
+
     @GetMapping("/board/{id}")
     public String detail(@PathVariable Integer id, HttpServletRequest request) {
         Board board = boardNativeRepository.findById(id);
