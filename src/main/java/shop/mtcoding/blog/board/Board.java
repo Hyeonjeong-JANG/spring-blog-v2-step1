@@ -2,6 +2,7 @@ package shop.mtcoding.blog.board;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import shop.mtcoding.blog.util.MyDateUtil;
 
 import java.sql.Timestamp;
 
@@ -20,5 +21,9 @@ public class Board {
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    public String getTime() {
+        return MyDateUtil.timestampFormat(createdAt);
     }
 }
